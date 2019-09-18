@@ -1,0 +1,22 @@
+{
+	"author": "Asen Kiprov",
+	"dependencies": {
+		"express": "^4.17.1"
+	},
+	"description": "A catalogue where cat lovers can find their new best friend",
+	"keywords": [
+		"cat",
+		"shelter"
+	],
+	"license": "MIT",
+	"main": "app.js",
+	"name": "cat-shelter",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/AscenKeeprov/JS-Back-End/CatShelter"
+	},
+	"scripts": {
+		"start": "node app.js"
+	},
+	"version": "1.0.0"
+}
