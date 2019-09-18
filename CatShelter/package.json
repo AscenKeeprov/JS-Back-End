@@ -13,7 +13,7 @@
 	"name": "cat-shelter",
 	"repository": {
 		"type": "git",
-		"url": "https://github.com/AscenKeeprov/JS-Back-End/CatShelter"
+		"url": "https://github.com/AscenKeeprov/JS-Back-End/tree/master/CatShelter"
 	},
 	"scripts": {
 		"start": "node app.js"
