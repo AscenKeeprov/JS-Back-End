@@ -1,8 +1,9 @@
-﻿const fileManager = require('./fileManager.js');
+﻿global.appRoot = process.cwd();
+
+const fs = require('fs');
+const handlers = require('./handlers/handlers.js')
 const http = require('http');
 const processManager = require('child_process');
-
-let config = JSON.parse(fileManager.readFile('./config.json'));
 
 const server = http.createServer((request, response) => {
     request.on('error', (err) => {
@@ -15,8 +16,21 @@ const server = http.createServer((request, response) => {
         console.error(err.stack);
     });
 
+    for (let handler of handlers) {
+        if (!handler(request, response)) {
+            break;
+        }
+    }
+
     if (request.url.includes('/content/')) {
-        fileManager.readFileAsync(`.${request.url}`, (fileData) => {
+        let filePath = `${appRoot}${request.url}`;
+        fs.readFile(filePath, 'utf-8', (err, data) => {
+            if (err) {
+                console.error(err.stack);
+                response.statusCode = 404;
+                response.end(`Error reading file at: ${filePath}`);
+                return;
+            }
             let fileTypeIndex = request.url.lastIndexOf('.');
             let fileType = request.url.substring(fileTypeIndex + 1);
             let contentType;
@@ -31,19 +45,13 @@ const server = http.createServer((request, response) => {
                     contentType = 'text/plain';
             }
             response.setHeader('Content-Type', contentType);
-            response.write(fileData);
-            response.end();
-        });
-    }
-
-    if (request.method === 'GET' && request.url === '/') {
-        fileManager.readFileAsync('./views/home/index.html', (html) => {
-            response.setHeader('Content-Type', 'text/html');
-            response.write(html);
+            response.write(data);
             response.end();
         });
     }
 });
+
+let config = JSON.parse(fs.readFileSync(`${appRoot}/config.json`, 'utf-8'));
 
 server.listen(config.port, config.host, () => {
     console.log(`Listening on port ${config.port}`);
