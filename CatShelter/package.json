@@ -1,8 +1,5 @@
 {
 	"author": "Asen Kiprov",
-	"dependencies": {
-		"express": "^4.17.1"
-	},
 	"description": "A catalogue where cat lovers can find their new best friend",
 	"keywords": [
 		"cat",
