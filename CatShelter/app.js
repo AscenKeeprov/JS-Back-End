@@ -21,34 +21,6 @@ const server = http.createServer((request, response) => {
             break;
         }
     }
-
-    if (request.url.includes('/content/')) {
-        let filePath = `${appRoot}${request.url}`;
-        fs.readFile(filePath, 'utf-8', (err, data) => {
-            if (err) {
-                console.error(err.stack);
-                response.statusCode = 404;
-                response.end(`Error reading file at: ${filePath}`);
-                return;
-            }
-            let fileTypeIndex = request.url.lastIndexOf('.');
-            let fileType = request.url.substring(fileTypeIndex + 1);
-            let contentType;
-            switch (fileType.toLowerCase()) {
-                case 'css':
-                    contentType = 'text/css';
-                    break;
-                case 'ico':
-                    contentType = 'image/x-icon';
-                    break;
-                default:
-                    contentType = 'text/plain';
-            }
-            response.setHeader('Content-Type', contentType);
-            response.write(data);
-            response.end();
-        });
-    }
 });
 
 let config = JSON.parse(fs.readFileSync(`${appRoot}/config.json`, 'utf-8'));

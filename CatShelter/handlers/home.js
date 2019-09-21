@@ -14,7 +14,5 @@ module.exports = (request, response) => {
             response.write(html);
             response.end();
         });
-    } else {
-        return true;
-    }
+    } else return true;
 }
