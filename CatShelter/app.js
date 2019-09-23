@@ -1,11 +1,20 @@
 ﻿global.appRoot = process.cwd();
 
-const fs = require('fs');
-const handlers = require('./handlers/handlers.js')
+const config = require(`${appRoot}/config.json`);
+const handlers = require(`${appRoot}/handlers/handlers.js`)
 const http = require('http');
 const processManager = require('child_process');
 
 const server = http.createServer((request, response) => {
+	request.data = '';
+	request.on('data', (data) => {
+		if (request.data.length > 1e6) {
+			response.writeHead(413, { 'Content-Type': 'text/plain' }).end();
+			request.abort();
+		}
+		request.data += data;
+	});
+
     request.on('error', (err) => {
         console.error(err.stack);
         response.statusCode = 400;
@@ -16,14 +25,12 @@ const server = http.createServer((request, response) => {
         console.error(err.stack);
     });
 
-    for (let handler of handlers) {
+	for (let handler of handlers) {
         if (!handler(request, response)) {
             break;
         }
     }
 });
-
-let config = JSON.parse(fs.readFileSync(`${appRoot}/config.json`, 'utf-8'));
 
 server.listen(config.port, config.host, () => {
     console.log(`Listening on port ${config.port}`);
