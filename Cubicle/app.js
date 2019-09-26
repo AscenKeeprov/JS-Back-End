@@ -1,11 +1,13 @@
 global.appRoot = process.cwd();
 
-const app = require('express')();
 const env = process.env.NODE_ENV || 'development';
+const express = require('express');
 const config = require(`${appRoot}/core/config.js`)[env];
 const processManager = require('child_process');
 const router = require(`${appRoot}/core/router.js`);
+const app = express();
 
+app.use(express.static(`${appRoot}/static`));
 app.use(router);
 
 app.listen(config.port, config.host, () => {
