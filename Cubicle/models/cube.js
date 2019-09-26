@@ -6,4 +6,8 @@ module.exports = class Cube {
 		this.imageURL = imageURL;
 		this.difficulty = difficulty;
 	}
+
+	toString() {
+		return `${this.name} [${this.difficulty}]`;
+	}
 };

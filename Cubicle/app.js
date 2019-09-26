@@ -1,16 +1,30 @@
 global.appRoot = process.cwd();
 
-const app = require('express')();
 const env = process.env.NODE_ENV || 'development';
-const config = require(`${appRoot}/config/config.js`)[env];
+const express = require('express');
+const fs = require('fs');
+const config = require(`${appRoot}/core/config.js`)[env];
 const processManager = require('child_process');
-const router = require(`${appRoot}/config/routes.js`)(app);
 
-const server = app.listen(config.port, config.host, () => {
-	console.log(`Listening on port ${config.port}`)
+const app = express();
+
+require(`${appRoot}/core/routes.js`)(app);
+
+app.use(function (req, res, next) {
+	fs.readFile(`${appRoot}/views/404.hbs`, (err, data) => {
+		if (err) next(err);
+		else res.status(404).send(data.toString());
+	});
+})
+
+app.use(function (err, req, res, next) {
+	console.error(err.stack)
+	res.status(500).send('Internal Server Error');
 });
 
-require(`${appRoot}/config/express.js`)(app);
+app.listen(config.port, config.host, () => {
+	console.log(`Listening on port ${config.port}`)
+});
 
 let appURL = `http://${config.host}:${config.port}`;
 switch (process.platform) {
@@ -24,3 +38,5 @@ switch (process.platform) {
 		processManager.exec(`start ${appURL}`);
 		break;
 }
+
+module.exports = app;
