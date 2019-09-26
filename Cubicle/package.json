@@ -1,0 +1,21 @@
+{
+	"author": "Asen Kiprov",
+	"dependencies": {
+		"body-parser": "^1.19.0",
+		"express": "^4.17.1",
+		"express-handlebars": "^3.1.0",
+		"uniqid": "^5.0.3"
+	},
+	"description": "Discover Rubik's mysterious puzzles",
+	"license": "MIT",
+	"main": "app.js",
+	"name": "cubicle",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/AscenKeeprov/JS-Back-End/tree/master/Cubicle"
+	},
+	"scripts": {
+		"start": "node app.js"
+	},
+	"version": "1.0.0"
+}
