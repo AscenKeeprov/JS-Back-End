@@ -1,5 +1,7 @@
-// TODO: Require Controllers...
+const homeController = require(`${appRoot}/controllers/homeController.js`);
 
 module.exports = (app) => {
-	// TODO: Setup routing
+	app.get('/', (req, res) => {
+		homeController.getHome(req, res);
+	})
 };
