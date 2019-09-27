@@ -162,6 +162,11 @@ img {
 		text-align: center;
 	}
 
+	img.icon {
+		height: 0.85em;
+		width: auto;
+	}
+
 	img.logo {
 		float: left;
 		height: 80px;
