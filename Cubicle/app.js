@@ -1,5 +1,6 @@
 global.appRoot = process.cwd();
 
+const bodyParser = require('body-parser');
 const config = require(`${appRoot}/core/config.js`);
 const express = require('express');
 const processManager = require('child_process');
@@ -9,6 +10,7 @@ const app = express();
 
 require(`${appRoot}/core/viewEngine.js`)(app);
 
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(`${appRoot}/static`));
 app.use(router);
 

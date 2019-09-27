@@ -1,14 +1,12 @@
 module.exports = class Cube {
-	idPattern = /\b[0-9a-f\-]{24}\b/i;
-
 	constructor(id, name, description, imageURL, difficulty) {
-		if (!id.match(this.idPattern)) throw 'Invalid ID!';
+		if (this._isValidId(id) == false) throw 'Invalid ID!';
 		this._id = id;
-		if (!name || typeof name != 'string') throw 'Invalid name!';
+		if (this._isValidName(name) == false) throw 'Invalid name!';
 		this._name = name;
 		this._description = description;
 		this._imageURL = imageURL;
-		if (!difficulty || typeof difficulty != 'string') throw 'Invalid difficulty!';
+		if (this._isValidDifficulty(difficulty) == false) throw 'Invalid difficulty!';
 		this._difficulty = difficulty;
 	}
 
@@ -17,7 +15,8 @@ module.exports = class Cube {
 	}
 
 	set difficulty(value) {
-		if (!value || typeof value != 'string') throw 'Invalid difficulty!';
+		value = parseInt(value);
+		if (this._isValidDifficulty(value) == false) throw 'Invalid difficulty!';
 		this._difficulty = value;
 	}
 
@@ -26,7 +25,7 @@ module.exports = class Cube {
 	}
 
 	set id(value) {
-		if (!value.match(this.idPattern)) throw 'Invalid ID!';
+		if (this._isValidId(value) == false) throw 'Invalid ID!';
 		this._id = value;
 	}
 
@@ -35,8 +34,25 @@ module.exports = class Cube {
 	}
 
 	set name(value) {
-		if (!value || typeof value != 'string') throw 'Invalid name!';
+		if (this._isValidName(name) == false) throw 'Invalid name!';
 		this._name = value;
+	}
+
+	_isValidDifficulty(value) {
+		value = parseInt(value);
+		if (!value || isNaN(value) || value < 1 || value > 5) return false;
+		else return true;
+	}
+
+	_isValidId(value) {
+		let idPattern = /\b[0-9a-f\-]{24}\b/i;
+		if (!value || idPattern.test(value) == false) return false;
+		else return true;
+	}
+
+	_isValidName(value) {
+		if (!value || typeof value != 'string') return false;
+		else return true;
 	}
 
 	toString() {
