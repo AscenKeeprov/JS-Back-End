@@ -1,33 +1,32 @@
-global.appRoot = process.cwd();
-
-const bodyParser = require('body-parser');
-const config = require(`${appRoot}/core/config.js`);
 const express = require('express');
+global.app = express();
+app.root = process.cwd();
+
+const config = require(`${app.root}/core/config.js`);
+const database = require(`${app.root}/core/database.js`)(config);
 const processManager = require('child_process');
-const router = require(`${appRoot}/core/router.js`);
+const router = require(`${app.root}/core/router.js`);
 
-const app = express();
+require(`${app.root}/core/viewEngine.js`);
 
-require(`${appRoot}/core/viewEngine.js`)(app);
-
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(express.static(`${appRoot}/static`));
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(express.static(`${app.root}/static`));
 app.use(router);
 
-app.listen(config.port, config.host, () => {
-	console.log(`Listening on port ${config.port}`)
+const server = app.listen(config.url.port, config.url.hostname, function () {
+	console.log(`Listening on port ${server.port}`)
 });
 
-let appURL = `http://${config.host}:${config.port}`;
 switch (process.platform) {
 	case 'darwin':
-		processManager.exec(`open ${appURL}`);
+		processManager.exec(`open ${config.url.href}`);
 		break;
 	case 'linux':
-		processManager.exec(`xdg-open ${appURL}`);
+		processManager.exec(`xdg-open ${config.url.href}`);
 		break;
 	case 'win32':
-		processManager.exec(`start ${appURL}`);
+		processManager.exec(`start ${config.url.href}`);
 		break;
 }
 

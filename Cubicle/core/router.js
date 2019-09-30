@@ -1,5 +1,6 @@
-const homeController = require(`${appRoot}/controllers/homeController.js`);
-const cubesController = require(`${appRoot}/controllers/cubesController.js`);
+const controllersDir = `${app.root}/controllers`;
+const cubesController = require(`${controllersDir}/cubesController.js`);
+const homeController = require(`${controllersDir}/homeController.js`);
 const router = require('express').Router();
 
 router.get('/', homeController.index);

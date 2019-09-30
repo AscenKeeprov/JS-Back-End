@@ -1,4 +1,4 @@
-const Cube = require(`${appRoot}/models/cube.js`);
+const Cube = require(`${app.root}/models/cube.js`);
 const fs = require('fs');
 const ObjectId = require('bson').ObjectId;
 
@@ -11,7 +11,7 @@ function createPost(req, res, next) {
 	const { name, description, imageUrl, difficulty } = req.body;
 	try {
 		let newCube = new Cube(id, name, description, imageUrl, difficulty);
-		const cubesFile = `${appRoot}/data/cubes.json`;
+		const cubesFile = `${app.root}/data/cubes.json`;
 		fs.readFile(cubesFile, (err, data) => {
 			if (err) throw err;
 			let cubes = JSON.parse(data);
@@ -42,7 +42,7 @@ function createPost(req, res, next) {
 
 function detailsGet(req, res, next) {
 	try {
-		const cubesFile = `${appRoot}/data/cubes.json`;
+		const cubesFile = `${app.root}/data/cubes.json`;
 		fs.readFile(cubesFile, (err, data) => {
 			if (err) throw err;
 			const cubes = JSON.parse(data);

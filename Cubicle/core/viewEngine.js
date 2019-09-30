@@ -1,4 +1,6 @@
-const handlebars = require('express-handlebars').create({
+app.set('views', `${app.root}/views`);
+
+const viewEngine = require('express-handlebars').create({
 	defaultLayout: 'base',
 	extname: '.hbs',
 	helpers: {
@@ -6,13 +8,11 @@ const handlebars = require('express-handlebars').create({
 			return new Date().getUTCFullYear();
 		},
 	},
-	layoutsDir: `${appRoot}/views/layouts`,
-	partialsDir: `${appRoot}/views/partials`
+	layoutsDir: `${app.get('views')}/layouts`,
+	partialsDir: `${app.get('views')}/partials`
 });
 
+app.engine(viewEngine.extname, viewEngine.engine);
+app.set('view engine', viewEngine.extname);
 
-module.exports = (app) => {
-	app.engine(handlebars.extname, handlebars.engine);
-	app.set('view engine', handlebars.extname);
-	app.set('views', `${appRoot}/views`);
-};
+module.exports = viewEngine;

@@ -1,61 +1,36 @@
-module.exports = class Cube {
-	constructor(id, name, description, imageUrl, difficulty) {
-		if (this._isValidId(id) == false) throw 'Invalid ID!';
-		this._id = id;
-		if (this._isValidName(name) == false) throw 'Invalid name!';
-		this._name = name;
-		this._description = description;
-		this._imageUrl = imageUrl;
-		if (this._isValidDifficulty(difficulty) == false) throw 'Invalid difficulty!';
-		this._difficulty = difficulty;
-	}
+const mongoose = require('mongoose');
 
-	get difficulty() {
-		return this._difficulty;
+const cubeSchema = mongoose.Schema({
+	description: {
+		maxLength: 512,
+		type: String
+	},
+	difficulty: {
+		enum: [...Array(6).keys()].map(k => k + 1),
+		required: true,
+		type: Number
+	},
+	imageUrl: {
+		maxLength: 2048,
+		type: String
+	},
+	name: {
+		maxLength: 64,
+		required: true,
+		type: String,
+		unique: true
 	}
+});
 
-	set difficulty(value) {
-		value = parseInt(value);
-		if (this._isValidDifficulty(value) == false) throw 'Invalid difficulty!';
-		this._difficulty = value;
-	}
-
-	get id() {
-		return this._id;
-	}
-
-	set id(value) {
-		if (this._isValidId(value) == false) throw 'Invalid ID!';
-		this._id = value;
-	}
-
-	get name() {
-		return this._name;
-	}
-
-	set name(value) {
-		if (this._isValidName(name) == false) throw 'Invalid name!';
-		this._name = value;
-	}
-
-	_isValidDifficulty(value) {
-		value = parseInt(value);
-		if (!value || isNaN(value) || value < 1) return false;
-		else return true;
-	}
-
-	_isValidId(value) {
-		let idPattern = /\b[0-9a-f\-]{24}\b/i;
-		if (!value || idPattern.test(value) == false) return false;
-		else return true;
-	}
-
-	_isValidName(value) {
-		if (!value || typeof value != 'string') return false;
-		else return true;
-	}
-
-	toString() {
-		return `${this.name} [${this.difficulty}]`;
-	}
+cubeSchema.methods.toString = function () {
+	return `${this.name} [${this.difficulty}]`;
 };
+
+module.exports = mongoose.model('Cube', cubeSchema);
+
+//<option value="1">1 - Very Easy</option>
+//<option value="2">2 - Easy</option>
+//<option value="3">3 - Medium (Standard 3x3)</option>
+//<option value="4">4 - Intermediate</option>
+//<option value="5">5 - Expert</option>
+//<option value="6">6 - Hardcore</option>
