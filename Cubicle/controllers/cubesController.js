@@ -7,9 +7,10 @@ function createGet(req, res, next) {
 }
 
 function createPost(req, res, next) {
-	let id = new ObjectId().toString();
+	const id = new ObjectId().toString();
+	const { name, description, imageUrl, difficulty } = req.body;
 	try {
-		let newCube = new Cube(id, req.body.name, req.body.description, req.body.imageURL, req.body.difficulty);
+		let newCube = new Cube(id, name, description, imageUrl, difficulty);
 		const cubesFile = `${appRoot}/data/cubes.json`;
 		fs.readFile(cubesFile, (err, data) => {
 			if (err) throw err;
@@ -27,7 +28,7 @@ function createPost(req, res, next) {
 			});
 			else {
 				cubes.push(newCube);
-				let json = JSON.stringify(cubes);
+				let json = JSON.stringify(cubes, null, 4);
 				fs.writeFile(cubesFile, json, 'utf-8', () => {
 					console.log(`Added cube ${newCube.toString()}`);
 				});
@@ -35,14 +36,22 @@ function createPost(req, res, next) {
 			}
 		});
 	} catch (error) {
-		res.render('cubes/create', { error, title: 'Add a cube' });
+		res.render('cubes/create', { description, difficulty, error, imageUrl, name, title: 'Add a cube' });
 	}
 }
 
 function detailsGet(req, res, next) {
-	let cubeId = req.params.id;
-	console.log(`Browsing details for cube with ID ${cubeId}`);
-	res.render('cubes/details', { title: 'Cube details' });
+	try {
+		const cubesFile = `${appRoot}/data/cubes.json`;
+		fs.readFile(cubesFile, (err, data) => {
+			if (err) throw err;
+			const cubes = JSON.parse(data);
+			const cube = cubes.find(c => c._id == req.params.id);
+			res.render('cubes/details', { cube, title: 'Cube details' });
+		});
+	} catch (error) {
+		res.redirect('/');
+	}
 }
 
 module.exports = {

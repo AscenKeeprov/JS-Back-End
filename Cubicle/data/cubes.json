@@ -1,1 +1,30 @@
-[{"_id":"5d8e21fa86a4dcec0d57d937","_name":"Gan356 Air SM","_description":"Magnets in AirSM will not drop, and their positions will be more precise with the Magnets-Snap-On design. With the use of 3mm*2mm magnets, the handfeel will be more stable and more comfortable. P.S. This design is brand new for the AirSM.","_difficulty":"3"}]
+[
+	{
+		"_id": "5d8e21fa86a4dcec0d57d937",
+		"_name": "Gan356 Air SM",
+		"_description": "Magnets in AirSM will not drop, and their positions will be more precise with the Magnets-Snap-On design. With the use of 3mm*2mm magnets, the handfeel will be more stable and more comfortable. P.S. This design is brand new for the AirSM.",
+		"_imageUrl": "https://images-na.ssl-images-amazon.com/images/I/61hfrKXGt9L._SX425_.jpg",
+		"_difficulty": "3"
+	},
+	{
+		"_id": "5d91ddbcf1b84df162735321",
+		"_name": "Eco-Dark",
+		"_description": "If you are a fan of the DC universe you are going to love this thing. Eco-Dark Rubik's Cube is a savior for those who are not into stickers and colors. Get the darker side of your brain unleashed through this environment-friendly Rubik’s cube that is completely black.",
+		"_imageUrl": "https://images-na.ssl-images-amazon.com/images/I/41Zjb0YFHIL._SY355_.jpg",
+		"_difficulty": "6"
+	},
+    {
+        "_id": "5d91de2e1b3022dcd4fea406",
+        "_name": "Pyraminx",
+        "_description": "The classic Meffert's Pyraminx features the original pyraminx design by Meffert's and the official Meffert's logo on the yellow face.",
+        "_imageUrl": "https://images-na.ssl-images-amazon.com/images/I/61izOzq%2BBAL._SY355_.jpg",
+        "_difficulty": "2"
+    },
+    {
+        "_id": "5d91de431b3022dcd4fea407",
+        "_name": "Megaminx",
+        "_description": "Megaminx features smooth turning and high-quality construction. This is the latest, improved version of the megaminx from Meffert's, and it has been designed with speedcubing in mind.",
+        "_imageUrl": "https://images-na.ssl-images-amazon.com/images/I/61HpQqVQ37L._SY355_.jpg",
+        "_difficulty": "4"
+    }
+]

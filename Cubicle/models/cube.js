@@ -1,11 +1,11 @@
 module.exports = class Cube {
-	constructor(id, name, description, imageURL, difficulty) {
+	constructor(id, name, description, imageUrl, difficulty) {
 		if (this._isValidId(id) == false) throw 'Invalid ID!';
 		this._id = id;
 		if (this._isValidName(name) == false) throw 'Invalid name!';
 		this._name = name;
 		this._description = description;
-		this._imageURL = imageURL;
+		this._imageUrl = imageUrl;
 		if (this._isValidDifficulty(difficulty) == false) throw 'Invalid difficulty!';
 		this._difficulty = difficulty;
 	}
@@ -40,7 +40,7 @@ module.exports = class Cube {
 
 	_isValidDifficulty(value) {
 		value = parseInt(value);
-		if (!value || isNaN(value) || value < 1 || value > 5) return false;
+		if (!value || isNaN(value) || value < 1) return false;
 		else return true;
 	}
 

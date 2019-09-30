@@ -2,11 +2,11 @@
 <div class="form">
 	<form action='/cubes/create' method="post">
 		<label for="name">Name</label>
-		<input id="name" name="name" type="text">
+		<input id="name" name="name" type="text" value="{{name}}">
 		<label for="description">Description</label>
-		<textarea id="description" name="description"></textarea>
+		<textarea id="description" name="description">{{description}}</textarea>
 		<label for="image">Image URL</label>
-		<input id="image" name="imageUrl" type="text">
+		<input id="image" name="imageUrl" type="text" value="{{imageUrl}}">
 		<label for="difficulty">Difficulty</label>
 		<select id="difficulty" name="difficulty">
 			<option value="0">Select difficulty...</option>
