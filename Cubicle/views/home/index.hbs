@@ -6,27 +6,11 @@
 	<input type="number" name="to" class="difficulty" placeholder="Difficulty to...">
 	<input type="submit" value="search">
 </form>
+{{#each cubes}}
 <div class="cube">
-	<img class="cube" src="https://images-na.ssl-images-amazon.com/images/I/61hfrKXGt9L._SX425_.jpg">
-	<p class="name">Gan356 Air SM</p>
-	<p><span>Difficulty level:</span> 3</p>
-	<a class="btn" href="/cubes/details/5d8e21fa86a4dcec0d57d937">Details</a>
+	<img class="cube" src="{{this.imageUrl}}">
+	<p class="name">{{this.name}}</p>
+	<p><span>Difficulty level:</span> {{this.difficulty}}</p>
+	<a class="btn" href="/cubes/details/{{this._id}}">Details</a>
 </div>
-<div class="cube">
-	<img class="cube" src="https://images-na.ssl-images-amazon.com/images/I/41Zjb0YFHIL._SY355_.jpg">
-	<p class="name">Eco-Dark</p>
-	<p><span>Difficulty level:</span> 6</p>
-	<a class="btn" href="/cubes/details/5d91ddbcf1b84df162735321">Details</a>
-</div>
-<div class="cube">
-	<img class="cube" src="https://images-na.ssl-images-amazon.com/images/I/61izOzq%2BBAL._SY355_.jpg">
-	<p class="name">Pyraminx</p>
-	<p><span>Difficulty level:</span> 2</p>
-	<a class="btn" href="/cubes/details/5d91de2e1b3022dcd4fea406">Details</a>
-</div>
-<div class="cube">
-	<img class="cube" src="https://images-na.ssl-images-amazon.com/images/I/61HpQqVQ37L._SY355_.jpg">
-	<p class="name">Megaminx</p>
-	<p><span>Difficulty level:</span> 4</p>
-	<a class="btn" href="/cubes/details/5d91de431b3022dcd4fea407">Details</a>
-</div>
+{{/each}}
