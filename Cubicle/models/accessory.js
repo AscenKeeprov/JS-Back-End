@@ -1,13 +1,12 @@
 const mongoose = require('mongoose');
 
-const cubeSchema = mongoose.Schema({
-	accessories: [{
-		ref: 'Accessory',
+const accessorySchema = mongoose.Schema({
+	cubes: [{
+		ref: 'Cube',
 		type: mongoose.Schema.Types.ObjectId
 	}],
 	description: {
 		maxLength: 512,
-		required: true,
 		type: String
 	},
 	difficulty: {
@@ -17,7 +16,6 @@ const cubeSchema = mongoose.Schema({
 	},
 	imageUrl: {
 		maxLength: 2048,
-		required: true,
 		type: mongoose.Schema.Types.Url
 	},
 	name: {
@@ -29,8 +27,8 @@ const cubeSchema = mongoose.Schema({
 	}
 });
 
-cubeSchema.methods.toString = function () {
+accessorySchema.methods.toString = function () {
 	return `${this.name} [${this.difficulty}]`;
 };
 
-module.exports = mongoose.model('Cube', cubeSchema);
+module.exports = mongoose.model('Accessory', accessorySchema);

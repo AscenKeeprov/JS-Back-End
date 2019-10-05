@@ -1,6 +1,8 @@
 const modelsDir = `${app.root}/models`;
 const mongoose = require('mongoose');
+const schemaTypesDir = `${app.root}/schemaTypes`;
 
+require(`${schemaTypesDir}/url.js`);
 require(`${modelsDir}/cube.js`);
 
 module.exports = (config) => {
