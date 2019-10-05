@@ -6,7 +6,7 @@ const cubeSchema = mongoose.Schema({
 		type: String
 	},
 	difficulty: {
-		enum: [...Array(6).keys()].map(k => k + 1),
+		min: 1,
 		required: true,
 		type: Number
 	},
@@ -16,6 +16,7 @@ const cubeSchema = mongoose.Schema({
 	},
 	name: {
 		maxLength: 64,
+		minLength: 3,
 		required: true,
 		type: String,
 		unique: true

@@ -1,10 +1,10 @@
 ﻿<h1>Browser</h1>
-<form action="/cubes/find" method="post">
-	<input class="search" name="search" placeholder="Search..." type="text">
-	<input type="number" name="from" class="difficulty" placeholder="Difficulty from...">
+<form action="/cubes/search" method="post">
+	<input class="w50" name="name" placeholder="Cube name or part of it" type="text">
+	<input class="w20" min="1" name="difficultyFrom" placeholder="Difficulty from" type="number">
 	<span>-</span>
-	<input type="number" name="to" class="difficulty" placeholder="Difficulty to...">
-	<input type="submit" value="search">
+	<input class="w20" min="1" name="difficultyTo" placeholder="Difficulty to" type="number">
+	<input type="submit" value="Search">
 </form>
 {{#each cubes}}
 <div class="cube">

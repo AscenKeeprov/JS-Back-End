@@ -7,6 +7,7 @@ router.get('/', homeController.index);
 router.get('/about', homeController.about);
 router.get('/cubes/create', cubesController.createGet);
 router.post('/cubes/create', cubesController.createPost);
+router.post('/cubes/search', cubesController.search);
 router.get('/cubes/details/:id', cubesController.detailsGet);
 
 router.use(function (req, res, next) {

@@ -7,13 +7,10 @@ function createGet(req, res, next) {
 function createPost(req, res, next) {
 	const { name, description, imageUrl, difficulty } = req.body;
 	Cube.create({ name, description, imageUrl, difficulty }).then(cube => {
-		console.log(`A new cube has been created: ${cube.name} [${cube.difficulty}]`);
+		console.log(`A new cube has been created: ${cube.toString()}`);
 		res.redirect('/');
 	}).catch(exception => {
-		let error = exception.errors.name;
-		if (error.kind == 'required') {
-			error = `Field '${error.path}' cannot be empty!`;
-		}
+		let error = Object.values(exception.errors).map(e => `Invalid ${e.path}!`);
 		res.render('cubes/create', { description, difficulty, error, imageUrl, name, title: 'Add a cube' });
 	});
 }
@@ -24,8 +21,27 @@ function detailsGet(req, res, next) {
 	}).catch(() => { res.redirect('/'); });
 }
 
+function search(req, res, next) {
+	if (!Object.values(req.body).some(filter => filter)) return res.redirect('/');
+	let difficultyFrom = req.body.difficultyFrom || 1;
+	let difficultyTo = req.body.difficultyTo || Number.MAX_SAFE_INTEGER;
+	let query = {
+		difficulty: {
+			$gte: Math.min(difficultyFrom, difficultyTo),
+			$lte: Math.max(difficultyFrom, difficultyTo),
+		}
+	};
+	if (req.body.name) query.name = new RegExp(req.body.name, 'i');
+	let order = { difficulty: 1 };
+	if (difficultyFrom > difficultyTo) order.difficulty = -1;
+	Cube.find(query).sort(order).then(cubes => {
+		res.render('home/index', { cubes, title: 'Home' });
+	}).catch(err => { console.error(err); });
+}
+
 module.exports = {
 	createGet,
 	createPost,
-	detailsGet
+	detailsGet,
+	search
 };
