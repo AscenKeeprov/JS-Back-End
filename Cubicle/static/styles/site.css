@@ -65,6 +65,19 @@ div.about {
 		text-decoration: none;
 	}
 
+div.accessories .accessory {
+	background-color: #f3f3f2;
+	display: inline-block;
+	margin: 1%;
+	padding: 1%;
+	width: 20%;
+}
+
+div.accessories, .italic {
+	font-style: italic;
+	text-align: center;
+}
+
 div.container {
 	display: block;
 }

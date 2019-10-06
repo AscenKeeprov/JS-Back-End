@@ -5,8 +5,8 @@ function createGet(req, res, next) {
 }
 
 function createPost(req, res, next) {
-	const { name, description, imageUrl, difficulty } = req.body;
-	Cube.create({ name, description, imageUrl, difficulty }).then(cube => {
+	const { description, difficulty, imageUrl, name } = req.body;
+	Cube.create({ description, difficulty, imageUrl, name }).then(cube => {
 		console.log(`A new cube has been created: ${cube.toString()}`);
 		res.redirect('/');
 	}).catch(exception => {
@@ -16,9 +16,9 @@ function createPost(req, res, next) {
 }
 
 function detailsGet(req, res, next) {
-	Cube.findById(req.params.id).then(cube => {
+	Cube.findById(req.params.id).populate('accessories').then(cube => {
 		res.render('cubes/details', { cube, title: 'Cube details' });
-	}).catch(() => { res.redirect('/'); });
+	}).catch(next);
 }
 
 function search(req, res, next) {
@@ -36,7 +36,7 @@ function search(req, res, next) {
 	if (difficultyFrom > difficultyTo) order.difficulty = -1;
 	Cube.find(query).sort(order).then(cubes => {
 		res.render('home/index', { cubes, title: 'Home' });
-	}).catch(err => { console.error(err); });
+	}).catch(next);
 }
 
 module.exports = {

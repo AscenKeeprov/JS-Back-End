@@ -1,10 +1,15 @@
 const controllersDir = `${app.root}/controllers`;
+const accessoriesController = require(`${controllersDir}/accessoriesController.js`);
 const cubesController = require(`${controllersDir}/cubesController.js`);
 const homeController = require(`${controllersDir}/homeController.js`);
 const router = require('express').Router();
 
 router.get('/', homeController.index);
 router.get('/about', homeController.about);
+router.get('/accessories/attach/:cubeId', accessoriesController.attachGet);
+router.post('/accessories/attach/:cubeId', accessoriesController.attachPost);
+router.get('/accessories/create', accessoriesController.createGet);
+router.post('/accessories/create', accessoriesController.createPost);
 router.get('/cubes/create', cubesController.createGet);
 router.post('/cubes/create', cubesController.createPost);
 router.post('/cubes/search', cubesController.search);
@@ -15,7 +20,7 @@ router.use(function (req, res, next) {
 });
 
 router.use(function (err, req, res, next) {
-	console.error(err.stack);
+	console.error(err);
 	res.sendStatus(500);
 });
 

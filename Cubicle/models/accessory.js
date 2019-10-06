@@ -7,12 +7,8 @@ const accessorySchema = mongoose.Schema({
 	}],
 	description: {
 		maxLength: 512,
-		type: String
-	},
-	difficulty: {
-		min: 1,
 		required: true,
-		type: Number
+		type: String
 	},
 	imageUrl: {
 		maxLength: 2048,
@@ -26,9 +22,5 @@ const accessorySchema = mongoose.Schema({
 		unique: true
 	}
 });
-
-accessorySchema.methods.toString = function () {
-	return `${this.name} [${this.difficulty}]`;
-};
 
 module.exports = mongoose.model('Accessory', accessorySchema);
