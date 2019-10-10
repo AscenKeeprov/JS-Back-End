@@ -1,5 +1,7 @@
 const url = require('url');
 
+app.disable('x-powered-by');
+
 app.set('env', process.env.NODE_ENV || 'development');
 
 switch (app.settings.env) {
