@@ -1,3 +1,6 @@
-{{#each error}}
+{{#each errors}}
 <h2 style="color:red;">{{this}}</h2>
 {{/each}}
+{{#if error}}
+<h2 style="color:red;">{{error}}</h2>
+{{/if}}

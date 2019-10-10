@@ -2,6 +2,8 @@ const controllersDir = `${app.root}/controllers`;
 const accessoriesController = require(`${controllersDir}/accessoriesController.js`);
 const cubesController = require(`${controllersDir}/cubesController.js`);
 const homeController = require(`${controllersDir}/homeController.js`);
+const usersController = require(`${controllersDir}/usersController.js`);
+
 const router = require('express').Router();
 
 function handleNotFound(req, res, next) {
@@ -15,14 +17,24 @@ function handleError(err, req, res, next) {
 
 router.get('/', homeController.index);
 router.get('/about', homeController.about);
-router.get('/accessories/attach/:cubeId', accessoriesController.attachGet);
-router.post('/accessories/attach/:cubeId', accessoriesController.attachPost);
-router.get('/accessories/create', accessoriesController.createGet);
-router.post('/accessories/create', accessoriesController.createPost);
-router.get('/cubes/create', cubesController.createGet);
-router.post('/cubes/create', cubesController.createPost);
+router.route('/accessories/attach/:cubeId')
+	.get(accessoriesController.attachGet)
+	.post(accessoriesController.attachPost);
+router.route('/accessories/create')
+	.get(accessoriesController.createGet)
+	.post(accessoriesController.createPost);
+router.route('/cubes/create')
+	.get(cubesController.createGet)
+	.post(cubesController.createPost);
 router.post('/cubes/search', cubesController.search);
 router.get('/cubes/details/:id', cubesController.detailsGet);
+router.route('/users/login')
+	.get(usersController.loginGet)
+	.post(usersController.loginPost);
+router.get('/users/logout', usersController.logout);
+router.route('/users/register')
+	.get(usersController.registerGet)
+	.post(usersController.registerPost);
 
 router.use(handleNotFound);
 router.use(handleError);

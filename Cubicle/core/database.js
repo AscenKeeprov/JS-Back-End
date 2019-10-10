@@ -5,6 +5,7 @@ const schemaTypesDir = `${app.root}/schemaTypes`;
 require(`${schemaTypesDir}/url.js`);
 require(`${modelsDir}/accessory.js`);
 require(`${modelsDir}/cube.js`);
+require(`${modelsDir}/user.js`);
 
 module.exports = (config) => {
 	return mongoose.connect(`mongodb://${config.url.hostname}`, {

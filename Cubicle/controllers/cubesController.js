@@ -10,8 +10,8 @@ function createPost(req, res, next) {
 		console.log(`A new cube has been created: ${cube.toString()}`);
 		res.redirect('/');
 	}).catch(exception => {
-		let error = Object.values(exception.errors).map(e => `Invalid ${e.path}!`);
-		res.render('cubes/create', { description, difficulty, error, imageUrl, name, title: 'Add a cube' });
+		let errors = Object.values(exception.errors).map(e => `Invalid ${e.path}!`);
+		res.render('cubes/create', { description, difficulty, errors, imageUrl, name, title: 'Add a cube' });
 	});
 }
 

@@ -28,8 +28,8 @@ function createPost(req, res, next) {
 		console.log(`A new accessory has been created: ${accessory.name}`);
 		res.redirect('/');
 	}).catch(exception => {
-		let error = Object.values(exception.errors).map(e => `Invalid ${e.path}!`);
-		res.render('accessories/create', { description, error, imageUrl, name, title: 'Add an accessory' });
+		let errors = Object.values(exception.errors).map(e => `Invalid ${e.path}!`);
+		res.render('accessories/create', { description, errors, imageUrl, name, title: 'Add an accessory' });
 	});
 }
 
