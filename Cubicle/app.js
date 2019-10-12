@@ -13,6 +13,7 @@ require(`${coreDir}/database.js`)(settings).then(() => {
 	app.use(express.urlencoded({ extended: true }));
 	app.use(express.static(`${app.root}/static`));
 	app.use(require(`${coreDir}/session.js`));
+	app.use(require(`${coreDir}/messenger.js`));
 	app.use(require(`${coreDir}/router.js`));
 
 	app.listen(settings.url.port, settings.url.hostname, function () {

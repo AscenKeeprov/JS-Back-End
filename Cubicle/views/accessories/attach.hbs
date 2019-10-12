@@ -3,7 +3,7 @@
 	<h2>{{cube.name}}</h2>
 	<img class="cube" src="{{cube.imageUrl}}">
 	{{#if accessories}}
-	<form action='/accessories/attach/{{cube._id}}' method="post">
+	<form action="/accessories/attach/{{cube._id}}" method="post">
 		<label for="accessory">Accessories</label>
 		<select id="accessory" name="accessoryId" required>
 			<option value="">Select an accessory...</option>

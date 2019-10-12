@@ -1,25 +1,5 @@
 @import url('https://fonts.googleapis.com/css?family=Open+Sans');
 
-@-webkit-keyframes fadeOut {
-	from {
-		opacity: 1;
-	}
-
-	to {
-		opacity: 0;
-	}
-}
-
-@keyframes fadeOut {
-	from {
-		opacity: 1;
-	}
-
-	to {
-		opacity: 0;
-	}
-}
-
 a {
 	color: white;
 	text-decoration: underline;
@@ -109,6 +89,21 @@ div.form {
 	padding: 20px;
 	width: 36%;
 }
+
+div.message {
+	font-size: 1.25em;
+	font-weight: bold;
+	padding: 0.5em 0.25em;
+	text-align: center;
+}
+
+	div.message .error {
+		color: red;
+	}
+
+	div.message .notification {
+		color: teal;
+	}
 
 footer {
 	background: #607588;
@@ -248,28 +243,3 @@ p.name {
 	text-align: center;
 	text-transform: uppercase;
 }
-
-span {
-	font-size: 17px;
-	font-style: italic;
-	font-weight: bolder;
-	padding: 10px;
-	text-align: center;
-}
-
-	span.error {
-		animation: fadeOut 1s forwards;
-		animation-delay: 2s;
-		background: #EF5542;
-		border-radius: 20px;
-		color: white;
-		display: block;
-		float: right;
-		font-weight: normal;
-		margin-top: 20px;
-		overflow: hidden;
-		padding: 10px;
-		position: relative;
-		text-align: center;
-		text-decoration: none;
-	}

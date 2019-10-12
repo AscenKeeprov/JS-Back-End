@@ -1,0 +1,9 @@
+{{#if error}}
+{{> message text=error type="error" }}
+{{/if}}
+{{#each errors}}
+{{> message text=this type="error" }}
+{{/each}}
+{{#if notification}}
+{{> message text=notification type="notification" }}
+{{/if}}
