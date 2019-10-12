@@ -1,3 +1,4 @@
+const auth = require(`${app.root}/core/auth.js`)
 const bcrypt = require('bcrypt');
 const querystring = require('querystring');
 const User = db.model('User');
@@ -7,10 +8,20 @@ function loginGet(req, res, next) {
 }
 
 function loginPost(req, res, next) {
-
+	res.locals.title = 'Login';
+	const { username, password } = req.body;
+	User.findOne({ username }).then(user => {
+		if (!user) return res.render('users/login', { error: `Account '${username}' does not exist` });
+		bcrypt.compare(password, user.password).then(passwordsMatch => {
+			if (!passwordsMatch) return res.render('users/login', { error: 'Invalid password!', username });
+			req.session.auth = auth.signIn({ id: user._id });
+			res.redirect('/');
+		}).catch(next);
+	}).catch(next);
 }
 
 function logout(req, res, next) {
+	req.session.destroy();
 	res.redirect('/');
 }
 

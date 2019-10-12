@@ -5,8 +5,12 @@
 		<li><a href="/cubes/create">Add a cube</a></li>
 		<li><a href="/accessories/create">Add an accessory</a></li>
 		<li><a href="/about">About</a></li>
-		<li><a href="/users/login">Login</a></li>
+		{{#if isAuthenticated}}
 		<li><a href="/users/logout">Logout</a></li>
+		{{/if}}
+		{{#unless isAuthenticated}}
+		<li><a href="/users/login">Login</a></li>
 		<li><a href="/users/register">Register</a></li>
+		{{/unless}}
 	</ul>
 </header>
