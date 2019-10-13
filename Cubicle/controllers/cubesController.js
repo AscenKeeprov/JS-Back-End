@@ -2,6 +2,7 @@ const auth = require(`${app.root}/core/auth.js`);
 const Cube = db.model('Cube');
 
 function createGet(req, res, next) {
+	if (res.locals.isAuthenticated === false) return res.status(401).render('401', { title: 'Unauthorized' });
 	res.render('cubes/create', { title: 'Add a cube' });
 }
 

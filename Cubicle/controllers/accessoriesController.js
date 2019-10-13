@@ -19,6 +19,7 @@ function attachPost(req, res, next) {
 }
 
 function createGet(req, res, next) {
+	if (res.locals.isAuthenticated === false) return res.status(401).render('401', { title: 'Unauthorized' });
 	res.render('accessories/create', { title: 'Add an accessory' });
 }
 

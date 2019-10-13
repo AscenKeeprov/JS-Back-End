@@ -4,6 +4,7 @@ const querystring = require('querystring');
 const User = db.model('User');
 
 function loginGet(req, res, next) {
+	if (res.locals.isAuthenticated === true) return res.redirect('/');
 	res.render('users/login', { title: 'Login' });
 }
 
@@ -28,6 +29,7 @@ function logout(req, res, next) {
 }
 
 function registerGet(req, res, next) {
+	if (res.locals.isAuthenticated === true) return res.redirect('/');
 	res.render('users/register', { title: 'Register' });
 }
 

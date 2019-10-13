@@ -7,7 +7,7 @@ const usersController = require(`${controllersDir}/usersController.js`);
 const router = require('express').Router();
 
 function handleNotFound(req, res, next) {
-	res.render('404', { title: 'Not Found' });
+	return res.status(404).render('404', { title: 'Not Found' });
 }
 
 function handleError(err, req, res, next) {
