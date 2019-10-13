@@ -1,4 +1,4 @@
-const auth = require(`${app.root}/core/auth.js`)
+const auth = require(`${app.root}/core/auth.js`);
 const bcrypt = require('bcrypt');
 const querystring = require('querystring');
 const User = db.model('User');
@@ -14,7 +14,7 @@ function loginPost(req, res, next) {
 		if (!user) return res.render('users/login', { error: `Account '${username}' does not exist` });
 		bcrypt.compare(password, user.password).then(passwordsMatch => {
 			if (!passwordsMatch) return res.render('users/login', { error: 'Invalid password!', username });
-			req.session.auth = auth.signIn({ id: user._id });
+			req.session.auth = auth.signIn({ uid: user._id });
 			res.redirect('/');
 		}).catch(next);
 	}).catch(next);

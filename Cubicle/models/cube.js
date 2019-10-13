@@ -5,6 +5,10 @@ const cubeSchema = mongoose.Schema({
 		ref: 'Accessory',
 		type: mongoose.Schema.Types.ObjectId
 	}],
+	creatorId: {
+		required: true,
+		type: String
+	},
 	description: {
 		maxLength: 512,
 		required: true,

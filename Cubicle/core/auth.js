@@ -9,11 +9,16 @@ function authenticate(req, res, next) {
 	next();
 }
 
+function getUserId(token) {
+	return jwt.decode(token).uid;
+}
+
 function signIn(data) {
 	return jwt.sign(data, secret, { expiresIn: '10m' });
 }
 
 module.exports = {
 	authenticate,
+	getUserId,
 	signIn
 }

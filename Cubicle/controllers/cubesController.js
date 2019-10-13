@@ -1,3 +1,4 @@
+const auth = require(`${app.root}/core/auth.js`);
 const Cube = db.model('Cube');
 
 function createGet(req, res, next) {
@@ -6,7 +7,8 @@ function createGet(req, res, next) {
 
 function createPost(req, res, next) {
 	const { description, difficulty, imageUrl, name } = req.body;
-	Cube.create({ description, difficulty, imageUrl, name }).then(cube => {
+	const creatorId = auth.getUserId(req.session.auth);
+	Cube.create({ creatorId, description, difficulty, imageUrl, name }).then(cube => {
 		console.log(`A new cube has been created: ${cube.toString()}`);
 		res.redirect('/');
 	}).catch(exception => {
