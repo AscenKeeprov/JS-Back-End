@@ -26,8 +26,14 @@ router.route('/accessories/create')
 router.route('/cubes/create')
 	.get(cubesController.createGet)
 	.post(cubesController.createPost);
-router.post('/cubes/search', cubesController.search);
+router.route('/cubes/delete/:id')
+	.get(cubesController.deleteGet)
+	.post(cubesController.deletePost);
 router.get('/cubes/details/:id', cubesController.detailsGet);
+router.route('/cubes/edit/:id')
+	.get(cubesController.editGet)
+	.post(cubesController.editPost);
+router.post('/cubes/search', cubesController.search);
 router.route('/users/login')
 	.get(usersController.loginGet)
 	.post(usersController.loginPost);

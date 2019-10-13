@@ -18,10 +18,49 @@ function createPost(req, res, next) {
 	});
 }
 
-function detailsGet(req, res, next) {
+function deleteGet(req, res, next) {
+	if (res.locals.isAuthenticated === false) return res.status(401).render('401', { title: 'Unauthorized' });
 	Cube.findById(req.params.id).populate('accessories').then(cube => {
+		const userId = auth.getUserId(req.session.auth);
+		if (userId != cube.creatorId) return res.status(403).render('403', { title: 'Forbidden' });
+		res.render('cubes/delete', { cube, title: 'Delete cube' });
+	}).catch(next);
+}
+
+function deletePost(req, res, next) {
+	Cube.findByIdAndRemove(req.params.id).then(cube => {
+		console.log(`Cube deleted: ${cube.toString()}`);
+		res.redirect('/');
+	}).catch(next);
+}
+
+function detailsGet(req, res, next) {
+	const userId = auth.getUserId(req.session.auth);
+	Cube.findById(req.params.id).populate('accessories').then(cube => {
+		res.locals.isAuthorized = userId == cube.creatorId;
 		res.render('cubes/details', { cube, title: 'Cube details' });
 	}).catch(next);
+}
+
+function editGet(req, res, next) {
+	if (res.locals.isAuthenticated === false) return res.status(401).render('401', { title: 'Unauthorized' });
+	Cube.findById(req.params.id).populate('accessories').then(cube => {
+		const userId = auth.getUserId(req.session.auth);
+		if (userId != cube.creatorId) return res.status(403).render('403', { title: 'Forbidden' });
+		res.render('cubes/edit', { cube, title: 'Edit cube' });
+	}).catch(next);
+}
+
+function editPost(req, res, next) {
+	const { description, difficulty, imageUrl, name } = req.body;
+	Cube.findByIdAndUpdate(req.params.id, { description, difficulty, imageUrl, name }, { runValidators: true })
+		.then(cube => {
+			console.log(`Cube updated: ${cube.toString()}`);
+			res.redirect(`/cubes/details/${cube._id}`);
+		}).catch(exception => {
+			let errors = Object.values(exception.errors).map(e => `Invalid ${e.path}!`);
+			res.render('cubes/edit', { description, difficulty, errors, imageUrl, name, title: 'Edit cube' });
+		});
 }
 
 function search(req, res, next) {
@@ -45,6 +84,10 @@ function search(req, res, next) {
 module.exports = {
 	createGet,
 	createPost,
+	deleteGet,
+	deletePost,
 	detailsGet,
+	editGet,
+	editPost,
 	search
 };

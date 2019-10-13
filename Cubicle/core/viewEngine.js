@@ -4,6 +4,9 @@ const viewEngine = require('express-handlebars').create({
 	defaultLayout: 'base',
 	extname: '.hbs',
 	helpers: {
+		select: function (value, options) {
+			return options.fn(this).replace(new RegExp(` value=\"${value}\"`), '$& selected');
+		},
 		year: function () {
 			return new Date().getUTCFullYear();
 		},

@@ -14,10 +14,10 @@ button, main a.btn {
 	display: inline-block;
 	font-size: 18px;
 	margin: 12px 12px 12px 6%;
+	min-width: 20%;
 	padding: 8px;
 	text-align: center;
 	text-decoration: none;
-	width: 43%;
 }
 
 	button:hover {

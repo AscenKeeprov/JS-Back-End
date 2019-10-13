@@ -10,7 +10,10 @@ function authenticate(req, res, next) {
 }
 
 function getUserId(token) {
-	return jwt.decode(token).uid;
+	let userId = undefined;
+	const decoded = jwt.decode(token);
+	if (decoded) userId = decoded.uid;
+	return userId;
 }
 
 function signIn(data) {
