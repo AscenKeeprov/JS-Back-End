@@ -21,7 +21,9 @@ function loginPost(req, res, next) {
 }
 
 function logout(req, res, next) {
+	let sessionCookie = req.session.cookie;
 	req.session.destroy();
+	res.clearCookie(`${app.get('name')}.session`, sessionCookie);
 	res.redirect('/');
 }
 

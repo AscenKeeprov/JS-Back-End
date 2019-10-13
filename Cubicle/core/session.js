@@ -5,7 +5,7 @@ module.exports = session({
 		httpOnly: true,
 		sameSite: 'lax'
 	},
-	name: 'sid',
+	name: `${app.get('name')}.session`,
 	resave: false,
 	saveUninitialized: false,
 	secret: '53cr37',
