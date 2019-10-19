@@ -1,9 +1,4 @@
-const controllersDir = `${app.root}/controllers`;
-const accessoriesController = require(`${controllersDir}/accessoriesController.js`);
-const cubesController = require(`${controllersDir}/cubesController.js`);
-const homeController = require(`${controllersDir}/homeController.js`);
-const usersController = require(`${controllersDir}/usersController.js`);
-
+const controllers = require(`${app.root}/controllers`);
 const router = require('express').Router();
 
 function handleNotFound(req, res, next) {
@@ -15,32 +10,32 @@ function handleError(err, req, res, next) {
 	return res.sendStatus(500);
 }
 
-router.get('/', homeController.index);
-router.get('/about', homeController.about);
+router.get('/', controllers.home.index);
+router.get('/about', controllers.home.about);
 router.route('/accessories/attach/:cubeId')
-	.get(accessoriesController.attachGet)
-	.post(accessoriesController.attachPost);
+	.get(controllers.accessories.attachGet)
+	.post(controllers.accessories.attachPost);
 router.route('/accessories/create')
-	.get(accessoriesController.createGet)
-	.post(accessoriesController.createPost);
+	.get(controllers.accessories.createGet)
+	.post(controllers.accessories.createPost);
 router.route('/cubes/create')
-	.get(cubesController.createGet)
-	.post(cubesController.createPost);
+	.get(controllers.cubes.createGet)
+	.post(controllers.cubes.createPost);
 router.route('/cubes/delete/:id')
-	.get(cubesController.deleteGet)
-	.post(cubesController.deletePost);
-router.get('/cubes/details/:id', cubesController.detailsGet);
+	.get(controllers.cubes.deleteGet)
+	.post(controllers.cubes.deletePost);
+router.get('/cubes/details/:id', controllers.cubes.detailsGet);
 router.route('/cubes/edit/:id')
-	.get(cubesController.editGet)
-	.post(cubesController.editPost);
-router.post('/cubes/search', cubesController.search);
+	.get(controllers.cubes.editGet)
+	.post(controllers.cubes.editPost);
+router.post('/cubes/search', controllers.cubes.search);
 router.route('/users/login')
-	.get(usersController.loginGet)
-	.post(usersController.loginPost);
-router.get('/users/logout', usersController.logout);
+	.get(controllers.users.loginGet)
+	.post(controllers.users.loginPost);
+router.get('/users/logout', controllers.users.logout);
 router.route('/users/register')
-	.get(usersController.registerGet)
-	.post(usersController.registerPost);
+	.get(controllers.users.registerGet)
+	.post(controllers.users.registerPost);
 
 router.use(handleNotFound);
 router.use(handleError);

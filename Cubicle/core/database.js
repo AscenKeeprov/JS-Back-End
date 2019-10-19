@@ -1,11 +1,7 @@
-const modelsDir = `${app.root}/models`;
 const mongoose = require('mongoose');
-const schemaTypesDir = `${app.root}/schemaTypes`;
 
-require(`${schemaTypesDir}/url.js`);
-require(`${modelsDir}/accessory.js`);
-require(`${modelsDir}/cube.js`);
-require(`${modelsDir}/user.js`);
+require(`${app.root}/schemaTypes`);
+require(`${app.root}/models`);
 
 module.exports = (config) => {
 	return mongoose.connect(`mongodb://${config.url.hostname}`, {
