@@ -2,13 +2,13 @@
 <div class="form">
 	<form action="/cubes/delete/{{cube._id}}" method="post">
 		<label for="name">Name</label>
-		<input id="name" name="name" type="text" value="{{cube.name}}" disabled>
+		<input disabled id="name" name="name" type="text" value="{{cube.name}}">
 		<label for="description">Description</label>
-		<textarea id="description" name="description" disabled>{{cube.description}}</textarea>
+		<textarea disabled id="description" name="description">{{cube.description}}</textarea>
 		<label for="imageUrl">Image URL</label>
-		<input id="imageUrl" name="imageUrl" type="text" value="{{cube.imageUrl}}" disabled>
+		<input disabled id="imageUrl" name="imageUrl" type="text" value="{{cube.imageUrl}}">
 		<label for="difficulty">Difficulty</label>
-		<select id="difficulty" name="difficulty" disabled>
+		<select disabled id="difficulty" name="difficulty">
 			{{#select cube.difficulty}}
 			<option value="1">1 - Very Easy</option>
 			<option value="2">2 - Easy</option>

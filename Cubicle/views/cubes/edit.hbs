@@ -2,11 +2,11 @@
 <div class="form">
 	<form action="/cubes/edit/{{cube._id}}" method="post">
 		<label for="name">Name</label>
-		<input id="name" name="name" type="text" value="{{cube.name}}" required>
+		<input id="name" name="name" required type="text" value="{{cube.name}}">
 		<label for="description">Description</label>
 		<textarea id="description" name="description" required>{{cube.description}}</textarea>
 		<label for="imageUrl">Image URL</label>
-		<input id="imageUrl" name="imageUrl" type="text" value="{{cube.imageUrl}}" required>
+		<input id="imageUrl" name="imageUrl" required type="text" value="{{cube.imageUrl}}">
 		<label for="difficulty">Difficulty</label>
 		<select id="difficulty" name="difficulty" required>
 			{{#select cube.difficulty}}

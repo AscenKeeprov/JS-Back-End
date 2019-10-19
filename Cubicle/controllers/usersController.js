@@ -2,6 +2,7 @@ const auth = require(`${app.root}/core/auth.js`);
 const bcrypt = require('bcrypt');
 const querystring = require('querystring');
 const User = db.model('User');
+const validator = require(`${app.root}/core/validator.js`);
 
 function loginGet(req, res, next) {
 	if (res.locals.isAuthenticated === true) return res.redirect('/');
@@ -35,19 +36,20 @@ function registerGet(req, res, next) {
 
 function registerPost(req, res, next) {
 	res.locals.title = 'Register';
-	const { username, password, rePassword } = req.body;
-	if (password !== rePassword) return res.render('users/register', { error: 'Passwords do not match!' });
+	const { username, password } = req.body;
+	let errors = validator.parseErrors(req);
+	if (errors.length > 0) return res.render('users/register', { errors, username });
 	Promise.all([
 		User.findOne({ username }),
 		bcrypt.hash(password, 8)
 	]).then(([existingUser, passwordHash]) => {
-		if (existingUser) return res.render('users/register', { error: `Username ${username} is already taken!` });
+		if (existingUser) return res.render('users/register', { error: `Username '${username}' is already taken!` });
 		User.create({ password: passwordHash, username }).then(user => {
 			console.log(`New user registered: ${user.username}`);
 			res.redirect('/users/login?' + querystring.stringify({ notification: 'Registration successful!' }));
 		}).catch(exception => {
-			let errors = Object.values(exception.errors).map(e => `Invalid ${e.path}!`);
-			res.render('cubes/create', { errors, imageUrl, title: 'Add a cube', username });
+			errors = Object.values(exception.errors).map(e => `Invalid ${e.path}!`);
+			res.render('users/register', { errors, username });
 		});
 	}).catch(next);
 }

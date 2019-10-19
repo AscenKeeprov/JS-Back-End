@@ -1,11 +1,12 @@
 const controllers = require(`${app.root}/controllers`);
+const { messages, patterns, validate } = require(`${app.root}/core/validator.js`);
 const router = require('express').Router();
 
 function handleNotFound(req, res, next) {
 	return res.status(404).render('404', { title: 'Not Found' });
 }
 
-function handleError(err, req, res, next) {
+function handleServerError(err, req, res, next) {
 	console.error(err);
 	return res.sendStatus(500);
 }
@@ -31,13 +32,20 @@ router.route('/cubes/edit/:id')
 router.post('/cubes/search', controllers.cubes.search);
 router.route('/users/login')
 	.get(controllers.users.loginGet)
-	.post(controllers.users.loginPost);
+	.post([
+		validate('username').escape(),
+		validate('password').escape()
+	], controllers.users.loginPost);
 router.get('/users/logout', controllers.users.logout);
 router.route('/users/register')
 	.get(controllers.users.registerGet)
-	.post(controllers.users.registerPost);
+	.post([
+		validate('username').trim().matches(patterns.username).withMessage(messages.username),
+		validate('password').trim().matches(patterns.password).withMessage(messages.password),
+		validate('rePassword').custom((value, { req }) => (value === req.body.password)).withMessage('Passwords do not match!')
+	], controllers.users.registerPost);
 
 router.use(handleNotFound);
-router.use(handleError);
+router.use(handleServerError);
 
 module.exports = router;

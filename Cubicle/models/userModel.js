@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 
 const userSchema = mongoose.Schema({
 	password: {
+		minLength: 8,
 		required: true,
 		type: String
 	},

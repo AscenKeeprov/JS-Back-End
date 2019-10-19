@@ -2,11 +2,11 @@
 <div class="form">
 	<form action="/accessories/create" method="post">
 		<label for="name">Name</label>
-		<input id="name" name="name" type="text" value="{{name}}">
+		<input id="name" name="name" required type="text" value="{{name}}">
 		<label for="description">Description</label>
-		<textarea id="description" name="description">{{description}}</textarea>
+		<textarea id="description" name="description" required>{{description}}</textarea>
 		<label for="imageUrl">Image URL</label>
-		<input id="imageUrl" name="imageUrl" type="text" value="{{imageUrl}}">
+		<input id="imageUrl" name="imageUrl" required type="text" value="{{imageUrl}}">
 		<input type="submit" value="Create">
 	</form>
 </div>
