@@ -10,14 +10,12 @@ function authenticate(req, res, next) {
 }
 
 function getUserId(token) {
-	let userId = undefined;
 	const decoded = jwt.decode(token);
-	if (decoded) userId = decoded.uid;
-	return userId;
+	if (decoded) return decoded.uid;
 }
 
-function signIn(data) {
-	return jwt.sign(data, secret, { expiresIn: '10m' });
+function signIn(payload) {
+	return jwt.sign(payload, secret, { expiresIn: '10m' });
 }
 
 module.exports = {

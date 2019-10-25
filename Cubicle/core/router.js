@@ -1,5 +1,5 @@
 const controllers = require(`${app.root}/controllers`);
-const { messages, patterns, validate } = require(`${app.root}/core/validator.js`);
+const { check } = require('express-validator');
 const router = require('express').Router();
 
 function handleNotFound(req, res, next) {
@@ -33,16 +33,22 @@ router.post('/cubes/search', controllers.cubes.search);
 router.route('/users/login')
 	.get(controllers.users.loginGet)
 	.post([
-		validate('username').escape(),
-		validate('password').escape()
+		check('username').escape(),
+		check('password').escape()
 	], controllers.users.loginPost);
 router.get('/users/logout', controllers.users.logout);
 router.route('/users/register')
 	.get(controllers.users.registerGet)
 	.post([
-		validate('username').trim().matches(patterns.username).withMessage(messages.username),
-		validate('password').trim().matches(patterns.password).withMessage(messages.password),
-		validate('rePassword').custom((value, { req }) => (value === req.body.password)).withMessage('Passwords do not match!')
+		check('username').exists().trim().not().isEmpty().withMessage('Username cannot be empty!'),
+		check('username').isLength({ min: 4 }).withMessage('Username must be 4 or more characters long!'),
+		check('username').isLength({ max: 50 }).withMessage('Username must be no more than 50 characters long!'),
+		check('username').matches(/^[0-9A-Za-z]+$/i).withMessage('Username must contain only English letters and digits!'),
+		check('password').exists().trim().not().isEmpty().withMessage('Password cannot be empty!'),
+		check('password').isLength({ min: 8 }).withMessage('Password must be 8 or more characters long!'),
+		check('password').matches(/^(?=.*[0-9])(?=.*[a-z])([0-9A-Za-z]+)$/i)
+			.withMessage('Password should contain at least one English letter and one digit!'),
+		check('rePassword').custom((value, { req }) => (value === req.body.password)).withMessage('Passwords do not match!')
 	], controllers.users.registerPost);
 
 router.use(handleNotFound);

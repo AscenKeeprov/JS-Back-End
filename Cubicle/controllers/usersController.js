@@ -1,8 +1,7 @@
 const auth = require(`${app.root}/core/auth.js`);
-const bcrypt = require('bcrypt');
 const querystring = require('querystring');
 const User = db.model('User');
-const validator = require(`${app.root}/core/validator.js`);
+const validator = require('express-validator');
 
 function loginGet(req, res, next) {
 	if (res.locals.isAuthenticated === true) return res.redirect('/');
@@ -14,7 +13,7 @@ function loginPost(req, res, next) {
 	const { username, password } = req.body;
 	User.findOne({ username }).then(user => {
 		if (!user) return res.render('users/login', { error: `Account '${username}' does not exist` });
-		bcrypt.compare(password, user.password).then(passwordsMatch => {
+		user.verifyPassword(password).then(passwordsMatch => {
 			if (!passwordsMatch) return res.render('users/login', { error: 'Invalid password!', username });
 			req.session.auth = auth.signIn({ uid: user._id });
 			res.redirect('/');
@@ -37,21 +36,28 @@ function registerGet(req, res, next) {
 function registerPost(req, res, next) {
 	res.locals.title = 'Register';
 	const { username, password } = req.body;
-	let errors = validator.parseErrors(req);
-	if (errors.length > 0) return res.render('users/register', { errors, username });
-	Promise.all([
-		User.findOne({ username }),
-		bcrypt.hash(password, 8)
-	]).then(([existingUser, passwordHash]) => {
-		if (existingUser) return res.render('users/register', { error: `Username '${username}' is already taken!` });
-		User.create({ password: passwordHash, username }).then(user => {
-			console.log(`New user registered: ${user.username}`);
-			res.redirect('/users/login?' + querystring.stringify({ notification: 'Registration successful!' }));
-		}).catch(exception => {
-			errors = Object.values(exception.errors).map(e => `Invalid ${e.path}!`);
-			res.render('users/register', { errors, username });
-		});
-	}).catch(next);
+	const validationError = validator.validationResult(req);
+	if (!validationError.isEmpty()) {
+		let errors = validationError.errors.map(e => e.msg);
+		return res.render('users/register', { errors, username });
+	}
+	User.create({ password, username }).then(user => {
+		console.log(`New user registered: ${user.username}`);
+		res.redirect('/users/login?' + querystring.stringify({ notification: 'Registration successful!' }));
+	}).catch(exception => {
+		switch (exception.name) {
+			case 'MongoError':
+				if (exception.code == 11000) {
+					let key = Object.keys(exception.keyValue)[0];
+					let value = Object.values(exception.keyValue)[0];
+					return res.render('users/register', { error: `Duplicate ${key}: '${value}'` });
+				}
+			case 'ValidationError':
+				let errors = Object.values(exception.errors).map(e => e.message);
+				return res.render('users/register', { errors, username });
+			default: next(exception);
+		}
+	});
 }
 
 module.exports = {

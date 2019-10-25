@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const accessorySchema = mongoose.Schema({
+const accessorySchema = new mongoose.Schema({
 	cubes: [{
 		ref: 'Cube',
 		type: mongoose.Schema.Types.ObjectId
@@ -8,7 +8,7 @@ const accessorySchema = mongoose.Schema({
 	description: {
 		maxLength: 512,
 		required: true,
-		type: String
+		type: mongoose.Schema.Types.String
 	},
 	imageUrl: {
 		maxLength: 2048,
@@ -18,7 +18,7 @@ const accessorySchema = mongoose.Schema({
 		maxLength: 64,
 		minLength: 3,
 		required: true,
-		type: String,
+		type: mongoose.Schema.Types.String,
 		unique: true
 	}
 });

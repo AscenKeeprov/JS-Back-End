@@ -1,23 +1,23 @@
 const mongoose = require('mongoose');
 
-const cubeSchema = mongoose.Schema({
+const cubeSchema = new mongoose.Schema({
 	accessories: [{
 		ref: 'Accessory',
 		type: mongoose.Schema.Types.ObjectId
 	}],
 	creatorId: {
 		required: true,
-		type: String
+		type: mongoose.Schema.Types.String
 	},
 	description: {
 		maxLength: 512,
 		required: true,
-		type: String
+		type: mongoose.Schema.Types.String
 	},
 	difficulty: {
 		min: 1,
 		required: true,
-		type: Number
+		type: mongoose.Schema.Types.Number
 	},
 	imageUrl: {
 		maxLength: 2048,
@@ -28,7 +28,7 @@ const cubeSchema = mongoose.Schema({
 		maxLength: 64,
 		minLength: 3,
 		required: true,
-		type: String,
+		type: mongoose.Schema.Types.String,
 		unique: true
 	}
 });
